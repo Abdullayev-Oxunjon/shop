@@ -137,7 +137,7 @@
                             {"breakpoint":992, "settings": {"slidesToShow": 4}},
                             {"breakpoint":575, "settings": {"slidesToShow": 3}}
                         ]'>
-                               
+
                             </div>
                         </div>
                     </div>
@@ -162,53 +162,50 @@
                             </div>
                             <p class="desc-content mb-5">{{ product.description }}</p>
                             <div class="quantity-with_btn mb-4">
-                                <div class="quantity">
-                                    <div class="cart-plus-minus">
-                                        <input class="cart-plus-minus-box" value="0" type="text">
-                                        <div class="dec qtybutton">-</div>
-                                        <div class="inc qtybutton">+</div>
+                                <form method="post" action="{% url 'add-cart' product.id %}">
+                                    {% csrf_token %}
+                                    <div class="quantity">
+                                        <div class="cart-plus-minus">
+                                            <input class="cart-plus-minus-box" value="{{ product.quantity }}"
+                                                   type="text" name="quantity">
+                                            <div class="dec qtybutton">-</div>
+                                            <div class="inc qtybutton">+</div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="add-to_cart">
-                                    {% if user.is_authenticated %}
-                                    <a class="btn obrien-button primary-btn" href="{% url 'product-cart-page' %}">Add to
-                                        cart</a>
-                                    {% else %}
-                                    <a class="btn obrien-button primary-btn"
-                                       href={% url 'login' %}>Add to cart</a>
-                                    {% endif %}
-
-
-
-                                       {% if user.is_authenticated %}
-                                           <a class="btn obrien-button-2 treansparent-color pt-0 pb-0"
+                                    <div class="add-to_cart">
+                                        <button type="submit" class="btn obrien-button primary-btn">Add to cart</button>
+                                    </div>
+                                </form>
+                                {% if user.is_authenticated %}
+                                    <a class="btn obrien-button-2 treansparent-color pt-0 pb-0"
                                        href="{% url 'add-wishlist' product.id %}">Add to wishlist</a>
-                                        {% else %}
-                                           <a class="btn obrien-button-2 treansparent-color pt-0 pb-0"
-                                           href={% url 'login' %}>Add to wishlist</a>
-                                    {% endif %}
-                                </div>
+                                {% else %}
+                                    <a class="btn obrien-button-2 treansparent-color pt-0 pb-0"
+                                       href={% url 'login' %}>Add to wishlist</a>
+                                {% endif %}
+
                             </div>
                             <br>
                             <button type="submit" class="btn obrien-button primary-btn">
                                 {% if user.is_authenticated %}
-                                <a href="{% url 'edit-product' product.id %}">Edit Product</a>
+                                    <a href="{% url 'edit-product' product.id %}">Edit Product</a>
                                 {% else %}
-                                <a href="{% url 'login' %}">Edit Product</a>
+                                    <a href="{% url 'login' %}">Edit Product</a>
                                 {% endif %}
                             </button>
 
 
-                            <br>   <br>
-                                    <button>
-                           {% if user.is_authenticated %}
-                             <a class="btn obrien-button primary-btn" href="{% url 'delete-product' product.id %}">Delete Product
-                                        </a>
+                            <br> <br>
+                            <button>
+                                {% if user.is_authenticated %}
+                                    <a class="btn obrien-button primary-btn"
+                                       href="{% url 'delete-product' product.id %}">Delete Product
+                                    </a>
 
-                            {% else %}
-                         <a class="btn obrien-button primary-btn" href="{% url 'login'  %}">Delete Product</a>
-                              {% endif %}
-                                    </button>
+                                {% else %}
+                                    <a class="btn obrien-button primary-btn" href="{% url 'login' %}">Delete Product</a>
+                                {% endif %}
+                            </button>
 
 
                             <br><br><br><br>
@@ -469,51 +466,10 @@
                         "slidesToShow": 1
                         }}
                         ]'>
-                            {% for product in products%}
-                            <div class="single-item">
-                                <div class="single-product position-relative">
-                                    <div class="product-image">
-                                        <a class="d-block" href="{% url 'product-details' product.id %}">
-                                            <img src="{{ product.image.url }}" height="300px" width="250px" alt=""
-                                                 class="product-image-1 w-100">
-                                            <img src="{{ product.image2.url }}" alt="{{ product.title }}"  height="300px" width="250px"  class="product-image-2 position-absolute w-100">
-
-
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"><a href="{% url 'product-details' product.id %}">{{ product.title }}</a>
-                                            </h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">${{ product.price }}</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="{% url 'product-cart-page' %}" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                        <a href="{% url 'product-compare-page' %}" title="Compare">
-                                            <i class="ion-ios-loop-strong"></i>
-                                        </a>
-                                        <a href="{% url 'product-wishlist-page' %}" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                        <a href="#exampleModalCenter" data-bs-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
-                                    </div>
+                            {% for product in products %}
+                                <div class="single-item">
+                                    {% include 'app/shop_main/product_single.html' %}
                                 </div>
-                            </div>
                             {% endfor %}
 
                         </div>
@@ -555,48 +511,9 @@
                         }}
                         ]'>
                             {% for product in products %}
-                            <div class="single-item">
-                                <div class="single-product position-relative">
-                                    <div class="product-image">
-                                        <a class="d-block" href="{% url 'product-details' product.id %}">
-                                            <img src="{{ product.image.url }}" height="300px" width="250px" alt=""
-                                                 class="product-image-1 w-100">
-                                               <img src="{{ product.image2.url }}" alt="{{ product.title }}"  height="300px" width="250px"  class="product-image-2 position-absolute w-100">
-
-
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"><a href="{% url 'product-details' product.id %}">{{ product.title }}</a>
-                                            </h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">${{ product.price }}</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="{% url 'product-cart-page' %}" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                       
-                                        <a href="{% url 'product-wishlist-page' %}" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                        <a href="#exampleModalCenter" data-bs-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
-                                    </div>
+                                <div class="single-item">
+                                    {% include 'app/shop_main/product_single.html' %}
                                 </div>
-                            </div>
                             {% endfor %}
 
                         </div>
@@ -686,7 +603,8 @@
                                                 </div>
                                             </div>
                                             <div class="add-to_cart">
-                                                <a class="btn obrien-button primary-btn" href="{% url 'product-cart-page' %}">Add to
+                                                <a class="btn obrien-button primary-btn"
+                                                   href="{% url 'product-cart-page' %}">Add to
                                                     cart</a>
                                             </div>
                                         </div>

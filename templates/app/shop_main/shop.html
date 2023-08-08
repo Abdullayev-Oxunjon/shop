@@ -57,79 +57,9 @@
                         <!-- Shop Wrapper Start -->
                         <div class="row shop_wrapper grid_list">
                             {% for product in product_list %}
-                            <div class="col-12 col-custom product-area">
-                                <div class="single-product position-relative">
-                                    <div class="product-image">
-                                        <a class="d-block" href="{% url 'product-details' product.id %}">
-                                            <img src="{{ product.image.url }}" alt="" class="product-image-1 w-100">
-                                        </a>
-                                    </div>
-                                    <div class="product-content">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"> {{ product.title }}</h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">${{ product.price }}</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                    </div>
-                                    <div class="add-action d-flex position-absolute">
-                                        <a href="{% url 'product-cart-page' %}" title="Add To cart">
-                                            <i class="ion-bag"></i>
-                                        </a>
-
-                                        {% if user.is_authenticated %}
-                                       <a href="{% url 'add-wishlist' product.pk %}" title="Add To Wishlist">
-                                    <i class="ion-ios-heart-outline"></i>
-                                    </a>
-                                                                    {% else %}
-                                    <a href="{% url 'login' %}" title="Add To Wishlist">
-                                            <i class="ion-ios-heart-outline"></i>
-                                        </a>
-                                    {% endif %}
-                                        <a href="#exampleModalCenter" data-bs-toggle="modal" title="Quick View">
-                                            <i class="ion-eye"></i>
-                                        </a>
-                                    </div>
-                                    <div class="product-content-listview">
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                        </div>
-                                        <div class="product-title">
-                                            <h4 class="title-2"> <a href="{% url 'product-details' product.id %}">{{ product.title }}</a></h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">${{ product.price }}</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                        <div class="add-action-listview d-flex">
-                                            <a href="{% url 'product-cart-page' %}" title="Add To cart">
-                                                <i class="ion-bag"></i>
-                                            </a>
-                                            <a href="{% url 'product-wishlist-page' %}" title="Add To Wishlist">
-                                                <i class="ion-ios-heart-outline"></i>
-                                            </a>
-                                            <a href="#exampleModalCenter" data-bs-toggle="modal" title="Quick View">
-                                                <i class="ion-eye"></i>
-                                            </a>
-                                        </div>
-                                        <p class="desc-content">
-                                            {{ product.description }}
-                                        </p>
-                                    </div>
+                                <div class="col-12 col-custom product-area">
+                                {% include 'app/shop_main/product_single.html' %}
                                 </div>
-                            </div>
                             {% endfor %}
                         </div>
                         <!-- Shop Wrapper End -->
@@ -334,74 +264,6 @@
         {% include 'app/main/footer.html' %}
         <!-- Footer Area End Here -->
     </div>
-
-    <!-- Modal Area Start Here -->
-    <div class="modal fade obrien-modal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <button type="button" class="close close-button" data-bs-dismiss="modal" aria-label="Close">
-                    <span class="close-icon" aria-hidden="true">x</span>
-                </button>
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 text-center">
-                                <div class="product-image">
-                                    <img src="{% static 'app/assets/images/product/1.jpg ' %}" alt="Product Image">
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="modal-product">
-                                    <div class="product-content">
-                                        <div class="product-title">
-                                            <h4 class="title">Product dummy name</h4>
-                                        </div>
-                                        <div class="price-box">
-                                            <span class="regular-price ">$80.00</span>
-                                            <span class="old-price"><del>$90.00</del></span>
-                                        </div>
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
-                                            <span>1 Review</span>
-                                        </div>
-                                        <p class="desc-content">we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame bel...</p>
-                                        <form class="d-flex flex-column w-100" action="#">
-                                            <div class="form-group">
-                                                <select class="form-control nice-select w-100">
-                                                    <option>S</option>
-                                                    <option>M</option>
-                                                    <option>L</option>
-                                                    <option>XL</option>
-                                                    <option>XXL</option>
-                                                </select>
-                                            </div>
-                                        </form>
-                                        <div class="quantity-with_btn">
-                                            <div class="quantity">
-                                                <div class="cart-plus-minus">
-                                                    <input class="cart-plus-minus-box" value="0" type="text">
-                                                    <div class="dec qtybutton">-</div>
-                                                    <div class="inc qtybutton">+</div>
-                                                </div>
-                                            </div>
-                                            <div class="add-to_cart">
-                                                <a class="btn obrien-button primary-btn" href="{% url 'product-cart-page' %}">Add to cart</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal Area End Here -->
 
     <!-- Scroll to Top Start -->
     <a class="scroll-to-top" href="#">

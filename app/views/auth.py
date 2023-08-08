@@ -2,6 +2,10 @@ from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect
 
 from app.form import RegisterForm, LoginForm
+from app.models import Cart
+
+
+
 
 
 def my_account(request):
@@ -10,7 +14,9 @@ def my_account(request):
 
 
 def login_view(request):
-    if request.method == "POST":
+    if request.user.is_authenticated:
+        return redirect("index")
+    elif request.method == "POST":
         form = LoginForm(request=request,
                          data=request.POST)
         if form.is_valid():
@@ -27,7 +33,9 @@ def login_view(request):
 
 
 def register_page(request):
-    if request.method == "POST":
+    if request.user.is_authenticated:
+        return redirect("index")
+    elif request.method == "POST":
         form = RegisterForm(data=request.POST)
         if form.is_valid():
             form.save()
@@ -41,3 +49,5 @@ def register_page(request):
 def logout_view(request):
     logout(request=request)
     return redirect('index')
+
+

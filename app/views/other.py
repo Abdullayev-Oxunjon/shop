@@ -6,7 +6,6 @@ from app.models import Product, Blog, Post, Category, User
 
 
 def index_view(request):
-
     products = Product.objects.order_by('-price')[:3]
     blogs = Blog.objects.all()
     return render(request=request,
@@ -14,7 +13,7 @@ def index_view(request):
                   context={"products": products,
                            'blogs': blogs})
 
-                            
+
 def shop_view(request):
     products = Product.objects.all()
     paginator = Paginator(object_list=products,
@@ -28,16 +27,16 @@ def shop_view(request):
 
     if request.GET.get("sort_by") == 'price':
         product_list = Product.objects.order_by('-price')[:5]
-        
+
     if query:
         product_list = Product.objects.filter(Q(title__icontains=query) |
                                               Q(category__title__icontains=query))
-        
+
     return render(request=request,
                   template_name='app/shop_main/shop.html',
                   context={"product_list": product_list,
-                           "query":query,
-                           'products_right':products_right})
+                           "query": query,
+                           'products_right': products_right})
 
 
 def product_blog_details_page(request, blog_id):
@@ -62,11 +61,11 @@ def product_blog_details_page(request, blog_id):
     return render(request=request,
                   template_name='app/blog_main/blog-details.html',
                   context={'blog': blog,
-                           "form":form,
-                           "post_list":post_list,
-                           'blogs':blogs ,
-                           'blog_list':blog_list
-                         })
+                           "form": form,
+                           "post_list": post_list,
+                           'blogs': blogs,
+                           'blog_list': blog_list
+                           })
 
 
 def product_blog(request):
@@ -86,8 +85,8 @@ def product_blog(request):
     return render(request=request,
                   template_name='app/blog_main/blog.html',
                   context={
-                           "blog_list":blog_list,
-                            'products_right' : products_right})
+                      "blog_list": blog_list,
+                      'products_right': products_right})
 
 
 def product_details_view(request, product_id):
@@ -96,8 +95,8 @@ def product_details_view(request, product_id):
 
     return render(request=request,
                   template_name='app/shop_main/product_details.html',
-                  context={'product':product,
-                           "products":products})
+                  context={'product': product,
+                           "products": products})
 
 
 def add_product_view(request):
@@ -115,7 +114,7 @@ def add_product_view(request):
                   template_name='app/add_product.html',
                   context={"form": form,
                            "categories": categories,
-                           "users":users})
+                           "users": users})
 
 
 def edit_product(request, product_id):
@@ -130,7 +129,7 @@ def edit_product(request, product_id):
             product = form.save(commit=False)
             if request.user.is_authenticated:
                 product.user = request.user
-            product.save(update_fields=['title', 'description', 'price', 'rank', 'image', 'category']) 
+            product.save(update_fields=['title', 'description', 'price', 'rank', 'image', 'category'])
 
             return redirect('product-details', product.id)
 
@@ -185,3 +184,5 @@ def contact_page(request):
     return render(request=request,
                   template_name='app/contact.html',
                   context={"form": form})
+
+

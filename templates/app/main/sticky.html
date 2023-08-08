@@ -7,7 +7,7 @@
                                 <div class="col-lg-2 col-xl-2 col-sm-6 col-6 col-custom">
                                     <div class="header-logo d-flex align-items-center">
                                         <a href="{% url 'index' %}">
-                                            <img class="img-full" src="{% static 'app/assets/images/logo/logo.png' %}" alt="Header Logo">
+                                            <img class="img-full" src="{% static 'app/assets/images/logo_5.png' %}" alt="Header Logo">
                                         </a>
                                     </div>
                                 </div>
@@ -15,59 +15,68 @@
                                     <nav class="main-nav d-flex justify-content-center">
                                         <ul class="nav">
                                             <li>
-                                                <a class="active" href="{% url 'index' %}">
+                                                <a {% if request.resolver_match.url_name == 'index' %}class="active"{% endif %} href="{% url 'index' %}">
                                                     <span class="menu-text"> Home</span>
                                                 </a>
 
                                             </li>
-                                            <li>
-                                                <a href="{% url 'shop_main' %}">
+                                                <li>
+                                                <a {% if request.resolver_match.url_name == 'shop_main' %}class="active"{% endif %} href="{% url 'shop_main' %}">
                                                     <span class="menu-text">Shop</span>
-                                                    <i class="fa fa-angle-down"></i>
+                                                     <i class="fa fa-angle-down"></i>
 
                                                 </a>
-                                                 <ul class="dropdown-submenu dropdown-hover">
-                                                     {% if user.is_authenticated %}
-                                                    <li><a href={% url 'add-product' %}>Add Product</a></li>
-                                                    <li><a href={% url 'shop_main' %}>Shop</a></li>
-                                                     {% else %}
-                                                      <li><a href={% url 'shop_main' %}>Shop</a></li>
-                                                     {% endif %}
+                                                <ul class="dropdown-submenu dropdown-hover">
+                                                       {% if user.is_authenticated %}
+                                                            <li><a href={% url 'add-product' %}>Add Product</a></li>
+                                                           <li><a href={% url 'shop_main' %}>Shop</a></li>
+
+                                                       {% else %}
+                                                           <li><a href={% url 'login' %}>Add Product</a></li>
+                                                            <li><a href={% url 'shop_main' %}>Shop</a></li>
+                                                        {% endif %}
                                                 </ul>
-
-
-
 
                                             </li>
                                             <li>
-                                                <a href="{% url 'product-blog-page' %}">
+                                                <a {% if request.resolver_match.url_name == 'product-blog-page' %}class="active"{% endif %} href="{% url 'product-blog-page' %}">
                                                     <span class="menu-text"> Blog</span>
                                                 </a>
 
                                             </li>
                                             <li>
-                                                <a href="#">
-                                                    <span class="menu-text"> Pages</span>
+                                                <a  {% if request.resolver_match.url_name == 'product-frequently-questions-page' or request.resolver_match.url_name == 'login' or request.resolver_match.url_name == 'register' or request.resolver_match.url_name == 'logout'  or request.resolver_match.url_name == 'my_account'  %}   class="active"{% endif %} href="#" >
+                                                        <span class="menu-text"> Pages</span>
                                                     <i class="fa fa-angle-down"></i>
                                                 </a>
+                                                <a
+                                                href="{% url 'product-frequently-questions-page'   %} or
+                                                {% url 'login' %} or
+                                                {% url 'register' %} or
+                                                {% url 'my-account' %} or
+
+                                                {% url 'logout' %}">
+                                                </a>
+
+
                                                 <ul class="dropdown-submenu dropdown-hover">
-                                                    {% if user.is_authenticated %}
                                                     <li><a href="{% url 'product-frequently-questions-page' %}">FAQ</a></li>
+                                                    {% if user.is_authenticated %}
                                                     <li><a href="{% url 'my-account' %}">My Account</a></li>
                                                     <li><a href="{% url 'logout' %}">Logout</a></li>
-                                                    {% else %}
-                                                        <li><a href="{% url 'product-frequently-questions-page' %}">FAQ</a></li>
+                                                     {% else %}
                                                         <li><a href="{% url 'login' %}">Login</a></li>
                                                         <li><a href="{% url 'register' %}">Register</a></li>
                                                     {% endif %}
+
                                                 </ul>
                                             </li>
                                             <li>
-                                                <a href="{% url 'about' %}"><span class="menu-text"> About</span>
+                                                <a  {% if request.resolver_match.url_name == 'about' %}class="active"{% endif %} href="{% url 'about' %}" ><span class="menu-text"> About</span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="{% url 'contact' %}">
+                                                <a  {% if request.resolver_match.url_name == 'contact' %}class="active"{% endif %} href="{% url 'contact' %}">
                                                     <span class="menu-text">Contact</span>
                                                 </a>
                                             </li>
@@ -80,11 +89,13 @@
                                             <li class="login-register-wrap d-none d-xl-flex">
                                             {% if user.is_authenticated %}
                                                 <span><a href="{% url 'logout' %}">Logout</a></span>
-                                            {% else %}
-                                                <span><a href="{% url 'login' %}">Login</a></span>
-                                                <span><a href="{% url 'register' %}">Register</a></span>
 
-                                             {% endif %}
+                                             {% else %}
+                                                 <span><a href="{% url 'login' %}">Login</a></span>
+                                                 <span><a href="{% url 'register' %}">Register</a></span>
+                                            {% endif %}
+
+
                                             </li>
                                             <li class="sidemenu-wrap d-none d-lg-flex">
                                                 <a href="#">USD <i class="fa fa-caret-down"></i> </a>
@@ -99,57 +110,31 @@
                                                     <li><a href="#">AUD - Australian Dollar</a></li>
                                                 </ul>
                                             </li>
-                                            <li class="minicart-wrap">
-                                                <a href="#" class="minicart-btn toolbar-btn">
+                                            {% if user.is_authenticated %}
+                                                <li class="minicart-wrap">
+                                                <a href="{% url 'product-cart-page' %}" class="minicart-btn toolbar-btn">
                                                     <i class="ion-bag"></i>
-                                                    <span class="cart-item_count">3</span>
+                                                    <span class="cart-item_count">{{ cart_items_nav_number }}</span>
                                                 </a>
                                                 <div class="cart-item-wrapper dropdown-sidemenu dropdown-hover-2">
-                                                    <div class="single-cart-item">
+                                                    {% for cart_item in cart_items_nav %}
+                                                    	<div class="single-cart-item">
                                                         <div class="cart-img">
-                                                            <a href="cart.html"><img src="{% static 'app/assets/images/cart/1.jpg' %}" alt=""></a>
+                                                            <a href="#"><img src="{{ cart_item.product.image.url }}" alt=""></a>
                                                         </div>
                                                         <div class="cart-text">
-                                                            <h5 class="title"><a href="cart.html">11. Product with video - navy</a></h5>
+                                                            <h5 class="title"><a href="cart.html">{{ cart_item.product.title }}</a></h5>
                                                             <div class="cart-text-btn">
                                                                 <div class="cart-qty">
-                                                                    <span>1×</span>
-                                                                    <span class="cart-price">$98.00</span>
+                                                                    <span>{{ cart_item.quantity }}×</span>
+                                                                    <span class="cart-price">{{ cart_item.product.price }}</span>
                                                                 </div>
-                                                                <button type="button"><i class="ion-trash-b"></i></button>
+                                                                <a href="{% url 'delete-cart' cart_item.id %}"><i class="ion-trash-b"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="single-cart-item">
-                                                        <div class="cart-img">
-                                                            <a href="cart.html"><img src="{% static 'app/assets/images/cart/2.jpg' %}" alt=""></a>
-                                                        </div>
-                                                        <div class="cart-text">
-                                                            <h5 class="title"><a href="cart.html" title="10. This is the large title for testing large title and there is an image for testing - white">10. This is the large title for testing...</a></h5>
-                                                            <div class="cart-text-btn">
-                                                                <div class="cart-qty">
-                                                                    <span>1×</span>
-                                                                    <span class="cart-price">$98.00</span>
-                                                                </div>
-                                                                <button type="button"><i class="ion-trash-b"></i></button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="single-cart-item">
-                                                        <div class="cart-img">
-                                                            <a href="cart.html"><img src="{% static 'app/assets/images/cart/3.jpg' %}" alt=""></a>
-                                                        </div>
-                                                        <div class="cart-text">
-                                                            <h5 class="title"><a href="cart.html">1. New and sale badge product - s / red</a></h5>
-                                                            <div class="cart-text-btn">
-                                                                <div class="cart-qty">
-                                                                    <span>1×</span>
-                                                                    <span class="cart-price">$98.00</span>
-                                                                </div>
-                                                                <button type="button"><i class="ion-trash-b"></i></button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    {% endfor %}
+
                                                     <div class="cart-price-total d-flex justify-content-between">
                                                         <h5>Total :</h5>
                                                         <h5>$166.00</h5>
@@ -160,6 +145,7 @@
                                                     </div>
                                                 </div>
                                             </li>
+                                            {% endif %}
                                             <li class="mobile-menu-btn d-lg-none">
                                                 <a class="off-canvas-btn" href="#">
                                                     <i class="fa fa-bars"></i>

@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from django.db.transaction import atomic
 from django.forms import HiddenInput
 
-from app.models import Product, Feedback, Post, User
+from app.models import Product, Feedback, Post, User, Order
 
 
 class ProductModelForm(forms.ModelForm):
@@ -76,3 +76,14 @@ class LoginForm(AuthenticationForm):
                 self.confirm_login_allowed(self.user_cache)
 
         return self.cleaned_data
+
+
+
+
+class OrderForm(forms.ModelForm):
+    cart_number = forms.CharField(max_length=16, min_length=16)
+    phone_number = forms.CharField(max_length=13)
+
+    class Meta:
+        model = Order
+        fields = ['cart_number', 'phone_number']

@@ -1,0 +1,76 @@
+<div class="single-product position-relative">
+    <div class="product-image">
+        <a class="d-block" href="{% url 'product-details' product.id %}">
+            <img src="{{ product.image.url }}" alt=""
+                 height="300px" width="600px"
+                 class="product-image-1 " style="object-fit: scale-down">
+        </a>
+    </div>
+    <div class="product-content">
+        <div class="product-rating">
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star-o"></i>
+            <i class="fa fa-star-o"></i>
+        </div>
+        <div class="product-title">
+            <h4 class="title-2"> {{ product.title }}</h4>
+        </div>
+        <div class="price-box">
+            <span class="regular-price ">${{ product.price }}</span>
+            <span class="old-price"><del>$90.00</del></span>
+        </div>
+    </div>
+    <div class="add-action d-flex position-absolute">
+            <a href="{% url 'add-cart' product.id %}" title="Add To cart">
+                <i class="ion-bag"></i>
+            </a>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'add-wishlist' product.id %}" title="Add To Wishlist">
+                <i class="ion-ios-heart-outline"></i>
+            </a>
+        {% else %}
+            <a href="{% url 'login' %}" title="Add To Wishlist">
+                <i class="ion-ios-heart-outline"></i>
+            </a>
+        {% endif %}
+        <a href="{% url 'product-details' product.id %}" title="Quick View">
+            <i class="ion-eye"></i>
+        </a>
+    </div>
+    {% if request.resolver_match.url_name == 'shop_main' %}
+        <div class="product-content-listview">
+            <div class="product-rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+            <div class="product-title">
+                <h4 class="title-2"><a href="{% url 'product-details' product.id %}">{{ product.title }}</a></h4>
+            </div>
+            <div class="price-box">
+                <span class="regular-price ">${{ product.price }}</span>
+                <span class="old-price"><del>$90.00</del></span>
+            </div>
+            <div class="add-action-listview d-flex">
+                <a href="{% url 'add-cart' product.id %}" title="Add To cart">
+                    <i class="ion-bag"></i>
+                </a>
+                <a href="{% url 'add-wishlist' product.id %}" title="Add To Wishlist">
+                    <i class="ion-ios-heart-outline"></i>
+                </a>
+                <a href="{% url 'product-details' product.id %}" title="Quick View">
+                    <i class="ion-eye"></i>
+                </a>
+            </div>
+            <p class="desc-content">
+                {{ product.description }}
+            </p>
+        </div>
+    {% endif %}
+
+</div>

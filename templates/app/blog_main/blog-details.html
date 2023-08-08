@@ -164,17 +164,6 @@
                                             <textarea cols="30" rows="5" name="message" class="border rounded-0 w-100 custom-textarea input-area" placeholder="Message" ></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-custom">
-                                        <div class="input-item mb-4">
-                                            <input class="border rounded-0 w-100 input-area name" type="text" placeholder="Name" name="username
-">
-                                        </div>
-                                    </div>
-{#                                    <div class="col-md-6 col-custom">#}
-{#                                        <div class="input-item mb-4">#}
-{#                                            <input class="border rounded-0 w-100 input-area email" type="text" placeholder="Email" name="email">#}
-{#                                        </div>#}
-{#                                    </div>#}
                                     <div class="col-12 col-custom mt-40">
                                         <button type="submit" class="btn obrien-button primary-btn rounded-0 w-100">Post comment</button>
                                     </div>
@@ -262,6 +251,7 @@
                                 <div class="widget-list widget-mb-4">
                                     <h3 class="widget-title">Recent Products</h3>
                                     <div class="sidebar-body">
+                                        <br><br>
                                         {% for blog in blogs %}
                                         <div class="sidebar-product align-items-center">
                                             <a href="{% url 'product-blog-details-page'  blog.pk %}" class="image">
@@ -281,6 +271,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                            <br><br>
                                         {% endfor    %}
                                     </div>
                                 </div>
