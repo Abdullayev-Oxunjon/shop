@@ -90,6 +90,7 @@ class Feedback(models.Model):
 
 
 class Post(BaseModel):
+
     message = models.TextField()
 
     user = models.ForeignKey(to='app.User',

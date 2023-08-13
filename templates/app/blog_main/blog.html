@@ -10,7 +10,7 @@
 
 {% block content %}
 
-         <div class="blog-wrapper">
+    <div class="blog-wrapper">
         <header class="main-header-area">
             <!-- Main Header Area Start -->
             {% include 'app/main/header.html' %}
@@ -19,8 +19,6 @@
             <!-- off-canvas menu start -->
 
 
-
-            
             <aside class="off-canvas-wrapper" id="mobileMenu">
                 <div class="off-canvas-overlay"></div>
                 <div class="off-canvas-inner-content">
@@ -116,28 +114,31 @@
                         <!-- Blog Wrapper Start -->
                         <div class="row">
                             {% for blog_single in blog_list %}
-                            <div class="col-md-6 col-custom mb-4">
-                                <div class="single-blog">
-                                    <div class="single-blog-thumb">
-                                        <a href="{% url 'product-blog-details-page' blog_single.id   %}">
-                                            <img src="{{ blog_single.image.url }}" alt="Blog Image" height="600px" width="450px">
-                                        </a>
-                                    </div>
-                                    <div class="single-blog-content position-relative">
-                                        <div class="post-date text-center border rounded d-flex flex-column position-absolute">
-                                            <span>14</span>
-                                            <span>01</span>
+                                <div class="col-md-6 col-custom mb-4">
+                                    <div class="single-blog">
+                                        <div class="single-blog-thumb">
+                                            <a href="{% url 'product-blog-details-page' blog_single.id %}">
+                                                <div style="background-image: url('{{ blog_single.image.url }}'); background-repeat: no-repeat;
+                                                        background-size: contain; width: 100%; height: 300px; background-position: center">
+
+                                                </div>
+                                            </a>
                                         </div>
-                                        <div class="post-meta">
-                                            <span class="author">Author: {{ blog_single.author }}</span>
+                                        <div class="single-blog-content position-relative">
+                                            <div class="post-date text-center border rounded d-flex flex-column position-absolute">
+                                                <span>14</span>
+                                                <span>01</span>
+                                            </div>
+                                            <div class="post-meta">
+                                                <span class="author">Author: {{ blog_single.author }}</span>
+                                            </div>
+                                            <h2 class="post-title">
+                                                <a href="{{ blog_single.id }}/">{{ blog_single.title }}</a>
+                                            </h2>
+                                            <p class="desc-content">{{ blog_single.description }}</p>
                                         </div>
-                                        <h2 class="post-title">
-                                            <a href="{{ blog_single.id }}/">{{ blog_single.title }}</a>
-                                        </h2>
-                                        <p class="desc-content">{{ blog_single.description }}</p>
                                     </div>
                                 </div>
-                            </div>
                             {% endfor %}
                         </div>
                         <!-- Blog Wrapper End -->
@@ -147,24 +148,25 @@
                                 <div class="toolbar-bottom">
                                     <nav class="pagination pagination-wrap mb-10 mb-sm-0">
                                         <ul class="pagination">
-                                           {% if blog_list.has_previous %}
-                                            <li class="disabled prev">
-                                                <a href="?page={{ blog_list.previous_page_number }}">
-                                                    <i class="ion-ios-arrow-thin-left"></i></a>
-                                            </li>
+                                            {% if blog_list.has_previous %}
+                                                <li class="disabled prev">
+                                                    <a href="?page={{ blog_list.previous_page_number }}">
+                                                        <i class="ion-ios-arrow-thin-left"></i></a>
+                                                </li>
                                             {% endif %}
-                                           {% for i in blog_list.paginator.page_range  %}
-                                             {% if blog_list.number == i %}
-                                                <li class="active"><a>{{ i }}</a></li>
-                                             {% else %}
-                                            <li ><a href="?page={{ i }}" >{{ i }}</a></li>
-                                            {% endif %}
+                                            {% for i in blog_list.paginator.page_range %}
+                                                {% if blog_list.number == i %}
+                                                    <li class="active"><a>{{ i }}</a></li>
+                                                {% else %}
+                                                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                                {% endif %}
                                             {% endfor %}
-                                        {% if blog_list.has_next %}
-                                            <li class="next">
-                                                <a href="?page={{ blog_list.next_page_number }}" title="Next >>"><i class="ion-ios-arrow-thin-right"></i></a>
-                                            </li>
-                                         {% endif %}
+                                            {% if blog_list.has_next %}
+                                                <li class="next">
+                                                    <a href="?page={{ blog_list.next_page_number }}" title="Next >>"><i
+                                                            class="ion-ios-arrow-thin-right"></i></a>
+                                                </li>
+                                            {% endif %}
                                         </ul>
                                     </nav>
                                 </div>
@@ -174,19 +176,17 @@
                     </div>
 
 
-                
-
-
-
                     <div class="col-lg-3 col-12 col-custom">
                         <!-- Sidebar Widget Start -->
-                    <div class="shop_toolbar_wrapper">
+                        <div class="shop_toolbar_wrapper">
                             <div class="shop_toolbar_btn">
-                                <button data-role="grid_list" type="button" class="active btn-list" data-bs-toggle="tooltip" title="List"><i class="fa fa-th-list"></i></button>
-                                <button data-role="grid_3" type="button" class="btn-grid-3" data-bs-toggle="tooltip" title="3"><i class="fa fa-th"></i></button>
+                                <button data-role="grid_list" type="button" class="active btn-list"
+                                        data-bs-toggle="tooltip" title="List"><i class="fa fa-th-list"></i></button>
+                                <button data-role="grid_3" type="button" class="btn-grid-3" data-bs-toggle="tooltip"
+                                        title="3"><i class="fa fa-th"></i></button>
                             </div>
 
-                          
+
                         </div>
                         <aside class="sidebar_widget mt-no-text">
                             <div class="widget_inner">
@@ -194,18 +194,19 @@
                                     <h3 class="widget-title">Search</h3>
                                     <div class="search-box">
                                         <form action="" method="get">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" name="query" value="{{ query }}" placeholder="Search Our Store" aria-label="Search Our Store">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="submit">
-                                                    <i class="fa fa-search"></i>
-                                                </button>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="query" value="{{ query }}"
+                                                       placeholder="Search Our Store" aria-label="Search Our Store">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-secondary" type="submit">
+                                                        <i class="fa fa-search"></i>
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
-                                            </form>
+                                        </form>
                                     </div>
                                 </div>
-                            
+
                                 <div class="widget-list widget-mb-3">
                                     <h3 class="widget-title">Menu Categories</h3>
                                     <!-- Widget Menu Start -->
@@ -267,27 +268,29 @@
                                     <h3 class="widget-title">Recent Products</h3>
                                     <div class="sidebar-body">
                                         {% for product in products_right %}
-                                        <div class="sidebar-product align-items-center">
-                                            <a href="{% url 'product-details' product.id %}" class="image">
-                                                <img src="{{ product.image.url }}" alt="product">
-                                            </a>
-                                            <div class="product-content">
-                                                <div class="product-title">
-                                                    <h4 class="title-2"> <a href="{% url 'product-details' product.id %}">{{ product.title }}</a></h4>
-                                                </div>
-                                                <div class="price-box">
-                                                    <span class="regular-price ">${{ product.price }}</span>
-                                                    <span class="old-price"><del>$90.00</del></span>
-                                                </div>
-                                                <div class="product-rating">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
+                                            <div class="sidebar-product align-items-center">
+                                                <a href="{% url 'product-details' product.id %}" class="image">
+                                                    <img src="{{ product.image.url }}" alt="product">
+                                                </a>
+                                                <div class="product-content">
+                                                    <div class="product-title">
+                                                        <h4 class="title-2"><a
+                                                                href="{% url 'product-details' product.id %}">{{ product.title }}</a>
+                                                        </h4>
+                                                    </div>
+                                                    <div class="price-box">
+                                                        <span class="regular-price ">${{ product.price }}</span>
+                                                        <span class="old-price"><del>$90.00</del></span>
+                                                    </div>
+                                                    <div class="product-rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                             <br>    <br>
                                         {% endfor %}
                                     </div>
@@ -320,7 +323,7 @@
         </div>
         <!-- Support Area End Here -->
         <!-- Footer Area Start Here -->
-             {% include 'app/main/footer.html' %}
+        {% include 'app/main/footer.html' %}
         <!-- Footer Area End Here -->
     </div>
 
@@ -357,7 +360,10 @@
                                             <i class="fa fa-star-o"></i>
                                             <span>1 Review</span>
                                         </div>
-                                        <p class="desc-content">we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame bel...</p>
+                                        <p class="desc-content">we denounce with righteous indignation and dislike men
+                                            who are so beguiled and demoralized by the charms of pleasure of the moment,
+                                            so blinded by desire, that they cannot foresee the pain and trouble that are
+                                            bound to ensue; and equal blame bel...</p>
                                         <form class="d-flex flex-column w-100" action="#">
                                             <div class="form-group">
                                                 <select class="form-control nice-select w-100">
@@ -378,7 +384,8 @@
                                                 </div>
                                             </div>
                                             <div class="add-to_cart">
-                                                <a class="btn obrien-button primary-btn" href="{% url 'product-cart-page' %}">Add to cart</a>
+                                                <a class="btn obrien-button primary-btn"
+                                                   href="{% url 'product-cart-page' %}">Add to cart</a>
                                             </div>
                                         </div>
                                     </div>

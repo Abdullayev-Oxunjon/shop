@@ -165,6 +165,7 @@
                         <div class="cart-update-option d-block d-md-flex justify-content-between">
                             <div class="apply-coupon-wrapper">
                                 <form action="#" method="post" class=" d-block d-md-flex">
+                                    {% csrf_token %}
                                     <input type="text" placeholder="Enter Your Coupon Code" required/>
                                     <button class="btn obrien-button primary-btn">Apply Coupon</button>
                                 </form>

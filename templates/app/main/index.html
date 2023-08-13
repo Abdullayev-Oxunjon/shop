@@ -254,7 +254,7 @@
                                                 <span class="author">Author: {{ blog.author }}</span>
                                             </div>
                                             <h2 class="post-title">
-                                                <a href="../blog_main/blog.html">{{ blog.title }}</a>
+                                                <a href="{% url 'product-blog-details-page' blog.id %}">{{ blog.title }}</a>
                                             </h2>
                                             <p class="desc-content">{{ blog.description }}</p>
                                         </div>

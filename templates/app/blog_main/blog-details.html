@@ -1,7 +1,6 @@
 
 
 
-
 {% extends 'app/main/base.html' %}
 {% load static %}
 
@@ -114,14 +113,14 @@
                         <!-- Blog Details wrapper Area Start -->
                         <div class="blog-post-details">
                             <figure class="blog-post-thumb mb-5">
-                                <img src="{{ blog.image.url }}" alt="Blog Image" height="600px" width="450px">
+                                <img src="{{ blog.image.url }}" alt="Blog Image" style="object-fit: revert">
                             </figure>
                             <section class="blog-post-wrapper product-summery">
                                 <div class="section-content">
                                     <h2 class="title-1 mb-3">{{ blog.title }}</h2>
                                     <p class="mb-4">{{ blog.description }}</p>
                                 </div>
-                                    <h6 class="text-uppercase" style="text-align: center">Share this article</h6>
+                                <h6 class="text-uppercase" style="text-align: center">Share this article</h6>
 
                                 <div class="social-share">
                                     <a href="#"><i class="fa fa-facebook-square facebook-color"></i></a>
@@ -133,19 +132,22 @@
                                     <div class="comments-view-area">
                                         <h3 class="mb-5">3 Comments</h3>
                                         {% for post in post_list %}
-                                        <div class="single-comment-wrap mb-4 d-flex">
-                                            <figure class="author-thumb">
-                                                <a href="#">
-                                                    <img src="{% static 'app/assets/images/review/1.jpg' %}" alt="Author">
-                                                </a>
-                                            </figure>
-                                            <div class="comments-info">
-                                                <p class="mb-2">{{ post.message }}</p>
-                                                <div class="comment-footer d-flex justify-content-between">
-                                                    <a href="#" class="author"><strong>{{ post.username }}</strong>{{ post.created_at }}</a>
+                                            <div class="single-comment-wrap mb-4 d-flex">
+                                                <figure class="author-thumb">
+                                                    <a href="#">
+                                                        <img src="{% static 'app/assets/images/review/1.jpg' %}"
+                                                             alt="Author">
+                                                    </a>
+                                                </figure>
+                                                <div class="comments-info">
+                                                    <p class="mb-2">{{ post.user }}</p>
+                                                    <div class="comment-footer d-flex justify-content-between">
+                                                        <a href="#"
+                                                           class="author"><strong>{{ post.message }}</strong><br>{{ post.created_at }}
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                         {% endfor %}
 
                                     </div>
@@ -161,12 +163,26 @@
                                 <div class="row">
                                     <div class="col-12 col-custom">
                                         <div class="input-item mt-4 mb-4">
-                                            <textarea cols="30" rows="5" name="message" class="border rounded-0 w-100 custom-textarea input-area" placeholder="Message" ></textarea>
+                                            <textarea cols="30" rows="5" name="message"
+                                                      class="border rounded-0 w-100 custom-textarea input-area"
+                                                      placeholder="Message"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-12 col-custom mt-40">
-                                        <button type="submit" class="btn obrien-button primary-btn rounded-0 w-100">Post comment</button>
+                                        {% if user.is_authenticated %}
+                                            <button type="submit" class="btn obrien-button primary-btn rounded-0 w-100">
+                                                Post comment
+                                            </button>
+                                            {% else %}
+
+                                            <a href="{% url 'login' %}"  class="btn obrien-button primary-btn rounded-0 w-100">
+                                                 Post comment
+                                            </a>
+
+                                        {% endif %}
+
                                     </div>
+
                                 </div>
                             </div>
                         </form>
@@ -180,15 +196,16 @@
                                     <h3 class="widget-title">Search</h3>
                                     <div class="search-box">
                                         <form action="" method="get">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" name="query" value="{{ query }}" placeholder="Search Our Store" aria-label="Search Our Store">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="submit">
-                                                    <i class="fa fa-search"></i>
-                                                </button>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="query" value="{{ query }}"
+                                                       placeholder="Search Our Store" aria-label="Search Our Store">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-secondary" type="submit">
+                                                        <i class="fa fa-search"></i>
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
-                                            </form>
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="widget-list widget-mb-3">
@@ -253,26 +270,28 @@
                                     <div class="sidebar-body">
                                         <br><br>
                                         {% for blog in blogs %}
-                                        <div class="sidebar-product align-items-center">
-                                            <a href="{% url 'product-blog-details-page'  blog.pk %}" class="image">
-                                                <img src="{{ blog.image.url }}" alt="product">
-                                            </a>
-                                            <div class="product-content">
-                                                <div class="product-title">
-                                                    <h4 class="title-2"> <a href="{% url 'product-blog-details-page' blog.pk %}">{{ blog.title }}</a></h4>
-                                                </div>
-                                                   
-                                                <div class="product-rating">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star-o"></i>
-                                                    <i class="fa fa-star-o"></i>
+                                            <div class="sidebar-product align-items-center">
+                                                <a href="{% url 'product-blog-details-page'  blog.pk %}" class="image">
+                                                    <img src="{{ blog.image.url }}" alt="product">
+                                                </a>
+                                                <div class="product-content">
+                                                    <div class="product-title">
+                                                        <h4 class="title-2"><a
+                                                                href="{% url 'product-blog-details-page' blog.pk %}">{{ blog.title }}</a>
+                                                        </h4>
+                                                    </div>
+
+                                                    <div class="product-rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                             <br><br>
-                                        {% endfor    %}
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </div>
