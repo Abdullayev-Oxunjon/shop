@@ -31,7 +31,7 @@ class Product(BaseModel):
     category = models.ForeignKey(to='app.Category',
                                  on_delete=models.CASCADE,
                                  related_name='products')
-    quantity = models.PositiveIntegerField(default=1, null=True, blank=True)
+    quantity = models.PositiveIntegerField( null=True, blank=True)
 
     user = models.ForeignKey(to='app.User',
                              on_delete=models.CASCADE,

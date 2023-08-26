@@ -126,6 +126,10 @@
                                 </thead>
                                 <tbody>
                                 {% for product in products %}
+                                    <form action="{% url 'add-cart' product.id %}" method="post">
+                                    {% csrf_token %}
+
+
                                     <tr>
                                         <td class="pro-thumbnail"><a href="#"><img class="img-fluid"
                                                                                    src="{{ product.image.url }}"
@@ -133,12 +137,17 @@
                                         <td class="pro-title"><a href="#">{{ product.title }}</a></td>
                                         <td class="pro-price"><span>${{ product.price }}</span></td>
                                         <td class="pro-stock"><span><strong>In Stock</strong></span></td>
-                                        <td class="pro-cart"><a href="checkout.html"
-                                                                class="btn obrien-button primary-btn text-uppercase">Add
-                                            to Cart</a></td>
+                                        <td class="pro-cart">
+                                            <button type="submit"
+                                                    class="btn obrien-button primary-btn text-uppercase">Add
+                                                to Cart
+                                            </button>
+                                        </td>
                                         <td class="pro-remove"><a href="{% url 'delete-wishlist' product.id %}"><i
                                                 class="ion-trash-b"></i></a></td>
                                     </tr>
+                                    </form>
+
                                 {% endfor %}
                                 </tbody>
                             </table>

@@ -22,7 +22,7 @@ def add_cart_view(request, product_id):
     product = Product.objects.filter(id=product_id).first()
 
     if request.method == "POST":
-        quantity = int(request.POST['quantity'])
+        quantity = int(request.POST.get('quantity', 1))
         cart = Cart.objects.create(user=request.user)
         if cart:
             cart = Cart.objects.filter(user=request.user).first()
@@ -55,7 +55,6 @@ def delete_cart_view(request, product_id):
 
 @login_required(login_url='login')
 def edit_cart_item_view(request, product_id):
-
     try:
         cart_item = CartItem.objects.get(pk=product_id,
                                          cart__user=request.user)

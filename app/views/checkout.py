@@ -7,18 +7,12 @@ def checkout_view(request):
     if not request.user.is_authenticated:
         return redirect('login')
 
-    try:
-        cart = Cart.objects.filter(user=request.user).first()
-        cart_items = cart.cartitem_set.all()
+    cart = Cart.objects.filter(user=request.user).first()
+    cart_items = cart.cartitem_set.all() if cart else []
 
-        total_sum = 0
-        for cart_item in cart_items:
-            total_sum += cart_item.product.price * cart_item.quantity
-
-    except Cart.DoesNotExist:
-        cart_items = []
-        total_sum = 0
-        cart = None
+    total_sum = 0
+    for cart_item in cart_items:
+        total_sum += cart_item.product.price * cart_item.quantity
 
     if request.method == 'POST':
         form = OrderForm(request.POST)
